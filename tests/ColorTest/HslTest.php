@@ -82,10 +82,9 @@ class HslTest extends TestCase
         $hsl = new Color\Hsl(260, 100, 100, 2);
     }
 
-    public function testHslToRgb()
+    public function testHslToRgb1()
     {
         $hsl = new Color\Hsl(40, 75, 94, 0.5);
-        //$rgb = new Color\Rgb(240, 180, 60, 0.5);
         $rgb = $hsl->toRgb();
         $this->assertEquals(240, $rgb['r']);
         $this->assertEquals(180, $rgb['g']);
@@ -96,6 +95,111 @@ class HslTest extends TestCase
         $this->assertEquals(60, $rgb->b);
         $this->assertEquals(0.5, $rgb->a);
         $this->assertEquals('rgba(240, 180, 60, 0.5)', (string)$rgb);
+    }
+
+    public function testHslToRgb2()
+    {
+        $hsl = new Color\Hsl(40, 0, 94, 0.5);
+        $rgb = $hsl->toRgb();
+        $this->assertEquals(240, $rgb['r']);
+        $this->assertEquals(240, $rgb['g']);
+        $this->assertEquals(240, $rgb['b']);
+        $this->assertEquals(0.5, $rgb['a']);
+        $this->assertEquals(240, $rgb->r);
+        $this->assertEquals(240, $rgb->g);
+        $this->assertEquals(240, $rgb->b);
+        $this->assertEquals(0.5, $rgb->a);
+        $this->assertEquals('rgba(240, 240, 240, 0.5)', (string)$rgb);
+    }
+
+    public function testHslToRgb3()
+    {
+        $hsl = new Color\Hsl(360, 24, 94, 0.5);
+        $rgb = $hsl->toRgb();
+        $this->assertEquals(240, $rgb['r']);
+        $this->assertEquals(182, $rgb['g']);
+        $this->assertEquals(182, $rgb['b']);
+        $this->assertEquals(0.5, $rgb['a']);
+        $this->assertEquals(240, $rgb->r);
+        $this->assertEquals(182, $rgb->g);
+        $this->assertEquals(182, $rgb->b);
+        $this->assertEquals(0.5, $rgb->a);
+        $this->assertEquals('rgba(240, 182, 182, 0.5)', (string)$rgb);
+    }
+
+    public function testHslToRgb4()
+    {
+        $hsl = new Color\Hsl(270, 24, 94, 0.5);
+        $rgb = $hsl->toRgb();
+        $this->assertEquals(211, $rgb['r']);
+        $this->assertEquals(182, $rgb['g']);
+        $this->assertEquals(240, $rgb['b']);
+        $this->assertEquals(0.5, $rgb['a']);
+        $this->assertEquals(211, $rgb->r);
+        $this->assertEquals(182, $rgb->g);
+        $this->assertEquals(240, $rgb->b);
+        $this->assertEquals(0.5, $rgb->a);
+        $this->assertEquals('rgba(211, 182, 240, 0.5)', (string)$rgb);
+    }
+
+    public function testHslToRgb5()
+    {
+        $hsl = new Color\Hsl(180, 24, 94, 0.5);
+        $rgb = $hsl->toRgb();
+        $this->assertEquals(182, $rgb['r']);
+        $this->assertEquals(240, $rgb['g']);
+        $this->assertEquals(182, $rgb['b']);
+        $this->assertEquals(0.5, $rgb['a']);
+        $this->assertEquals(182, $rgb->r);
+        $this->assertEquals(240, $rgb->g);
+        $this->assertEquals(182, $rgb->b);
+        $this->assertEquals(0.5, $rgb->a);
+        $this->assertEquals('rgba(182, 240, 182, 0.5)', (string)$rgb);
+    }
+
+    public function testHslToRgb6()
+    {
+        $hsl = new Color\Hsl(130, 24, 94, 0.5);
+        $rgb = $hsl->toRgb();
+        $this->assertEquals(182, $rgb['r']);
+        $this->assertEquals(240, $rgb['g']);
+        $this->assertEquals(192, $rgb['b']);
+        $this->assertEquals(0.5, $rgb['a']);
+        $this->assertEquals(182, $rgb->r);
+        $this->assertEquals(240, $rgb->g);
+        $this->assertEquals(192, $rgb->b);
+        $this->assertEquals(0.5, $rgb->a);
+        $this->assertEquals('rgba(182, 240, 192, 0.5)', (string)$rgb);
+    }
+
+    public function testHslToRgb7()
+    {
+        $hsl = new Color\Hsl(90, 24, 94, 0.5);
+        $rgb = $hsl->toRgb();
+        $this->assertEquals(211, $rgb['r']);
+        $this->assertEquals(240, $rgb['g']);
+        $this->assertEquals(182, $rgb['b']);
+        $this->assertEquals(0.5, $rgb['a']);
+        $this->assertEquals(211, $rgb->r);
+        $this->assertEquals(240, $rgb->g);
+        $this->assertEquals(182, $rgb->b);
+        $this->assertEquals(0.5, $rgb->a);
+        $this->assertEquals('rgba(211, 240, 182, 0.5)', (string)$rgb);
+    }
+
+    public function testHslToRgb8()
+    {
+        $hsl = new Color\Hsl(320, 24, 94, 0.5);
+        $rgb = $hsl->toRgb();
+        $this->assertEquals(240, $rgb['r']);
+        $this->assertEquals(182, $rgb['g']);
+        $this->assertEquals(221, $rgb['b']);
+        $this->assertEquals(0.5, $rgb['a']);
+        $this->assertEquals(240, $rgb->r);
+        $this->assertEquals(182, $rgb->g);
+        $this->assertEquals(221, $rgb->b);
+        $this->assertEquals(0.5, $rgb->a);
+        $this->assertEquals('rgba(240, 182, 221, 0.5)', (string)$rgb);
     }
 
     public function testHslToHex()

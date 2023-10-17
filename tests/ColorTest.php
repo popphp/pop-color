@@ -26,6 +26,18 @@ class ColorTest extends TestCase
         $this->assertInstanceOf('Pop\Color\Color\Hex', $hex);
     }
 
+    public function testCreateCmyk()
+    {
+        $cmyk = Color::cmyk(65, 20, 30, 50);
+        $this->assertInstanceOf('Pop\Color\Color\Cmyk', $cmyk);
+    }
+
+    public function testCreateGrayscale()
+    {
+        $grayscale = Color::grayscale(50);
+        $this->assertInstanceOf('Pop\Color\Color\Grayscale', $grayscale);
+    }
+
     public function testParseRgb()
     {
         $rgb = Color::parse('rgba(255, 255, 255, 0.5)');
@@ -44,16 +56,22 @@ class ColorTest extends TestCase
         $this->assertInstanceOf('Pop\Color\Color\Hex', $hex);
     }
 
+    public function testParseCmyk()
+    {
+        $cmyk = Color::parse('60 20 30 50');
+        $this->assertInstanceOf('Pop\Color\Color\Cmyk', $cmyk);
+    }
+
+    public function testParseGray()
+    {
+        $gray = Color::parse('60');
+        $this->assertInstanceOf('Pop\Color\Color\Grayscale', $gray);
+    }
+
     public function testParseException1()
     {
         $this->expectException('Pop\Color\Color\Exception');
         $rgb = Color::parse('bad color');
-    }
-
-    public function testParseException2()
-    {
-        $this->expectException('Pop\Color\Color\Exception');
-        $rgb = Color::parse('rgba(255, 255, 255, 0.5');
     }
 
 }

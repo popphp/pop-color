@@ -13,6 +13,8 @@
  */
 namespace Pop\Color;
 
+use ReflectionException;
+
 /**
  * Pop color class
  *
@@ -29,87 +31,113 @@ class Color
     /**
      * Instantiate an RGB color object
      *
-     * @param  int   $r
-     * @param  int   $g
-     * @param  int   $b
-     * @param  float $a
+     * @param  int    $r
+     * @param  int    $g
+     * @param  int    $b
+     * @param  ?float $a
      * @return Color\Rgb
      */
-    public static function rgb($r, $g, $b, $a = null)
+    public static function rgb(int $r, int $g, int $b, ?float $a = null): Color\Rgb
     {
         return new Color\Rgb($r, $g, $b, $a);
     }
 
     /**
-     * Instantiate an RGB color object
+     * Instantiate an HSL color object
      *
-     * @param  int   $h
-     * @param  int   $s
-     * @param  int   $l
-     * @param  float $a
+     * @param  int    $h
+     * @param  int    $s
+     * @param  int    $l
+     * @param  ?float $a
      * @return Color\Hsl
      */
-    public static function hsl($h, $s, $l, $a = null)
+    public static function hsl(int $h, int $s, int $l, ?float $a = null): Color\Hsl
     {
         return new Color\Hsl($h, $s, $l, $a);
     }
 
     /**
-     * Instantiate an RGB color object
+     * Instantiate a Hex color object
      *
      * @param  string $hex
      * @return Color\Hex
      */
-    public static function hex($hex)
+    public static function hex(string $hex): Color\Hex
     {
         return new Color\Hex($hex);
     }
 
     /**
-     * Parse CSS color from string
+     * Instantiate a CMYK color object
+     *
+     * @param  int $c
+     * @param  int $m
+     * @param  int $y
+     * @param  int $k
+     * @return Color\Cmyk
+     */
+    public static function cmyk(int $c, int $m, int $y, int $k): Color\Cmyk
+    {
+        return new Color\Cmyk($c, $m, $y, $k);
+    }
+
+    /**
+     * Instantiate a grayscale color object
+     *
+     * @param  int $gray
+     * @return Color\Grayscale
+     */
+    public static function grayscale(int $gray): Color\Grayscale
+    {
+        return new Color\Grayscale($gray);
+    }
+
+    /**
+     * Parse color from string
      *
      * @param  string $colorString
-     * @throws Color\Exception
-     * @return Color\ColorInterface|object
+     * @throws Color\Exception|ReflectionException
+     * @return Color\ColorInterface
      */
-    public static function parse($colorString)
+    public static function parse(string $colorString): Color\ColorInterface
     {
         $colorString = strtolower($colorString);
 
-        if (substr($colorString, 0, 3) == 'rgb') {
+        if (str_starts_with($colorString, 'rgb')) {
             $params = self::parseColorValues($colorString);
             return (new \ReflectionClass('Pop\Color\Color\Rgb'))->newInstanceArgs($params);
-        } else if (substr($colorString, 0, 3) == 'hsl') {
+        } else if (str_starts_with($colorString, 'hsl')) {
             $params = self::parseColorValues($colorString);
             return (new \ReflectionClass('Pop\Color\Color\Hsl'))->newInstanceArgs($params);
-        } else if (substr($colorString, 0, 1) == '#') {
+        } else if (str_starts_with($colorString, '#')) {
             return new Color\Hex($colorString);
-        } else {
+        } else if (substr_count($colorString, ' ') == 3) {
+            $params = self::parseColorValues($colorString, false);
+            return (new \ReflectionClass('Pop\Color\Color\Cmyk'))->newInstanceArgs($params);
+        } else if (is_numeric($colorString)) {
+            return new Color\Grayscale($colorString);
+        }
+        else {
             throw new Color\Exception('Error: The string was not in the correct color format.');
         }
     }
 
     /**
-     * Parse CSS color values from string
+     * Parse color values from string
      *
      * @param  string $colorString
-     * @throws Color\Exception
+     * @param  bool   $comma
      * @return array
      */
-    public static function parseColorValues($colorString)
+    public static function parseColorValues(string $colorString, $comma = true): array
     {
-        if ((strpos($colorString, '(') === false) || (strpos($colorString, ')') === false)) {
-            throw new Color\Exception('Error: The string was not in the correct color format.');
-        }
-        $colorString = substr($colorString, (strpos($colorString, '(') + 1));
-        $colorString = substr($colorString, 0, strpos($colorString, ')'));
-        $values      = explode(',' , $colorString);
-
-        foreach ($values as $key => $value) {
-            $values[$key] = trim($value);
+        if ((str_contains($colorString, '(')) && (str_contains($colorString, ')'))) {
+            $colorString = substr($colorString, (strpos($colorString, '(') + 1));
+            $colorString = substr($colorString, 0, strpos($colorString, ')'));
         }
 
-        return $values;
+        $values = ($comma) ? explode(',' , $colorString) : explode(' ', $colorString);
+        return array_map('trim', $values);
     }
 
 }

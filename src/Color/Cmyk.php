@@ -23,7 +23,7 @@ use OutOfRangeException;
  * @author     Nick Sagona, III <dev@nolainteractive.com>
  * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    1.0.0
  */
 class Cmyk extends AbstractColor implements \ArrayAccess
 {
@@ -82,6 +82,8 @@ class Cmyk extends AbstractColor implements \ArrayAccess
         $c = (float)$c;
         if (($c < 0) || ($c > 100)) {
             throw new OutOfRangeException('Error: The value must be between 0 and 100');
+        } else if ($c < 1) {
+            $c = (float)($c * 100);
         }
         $this->c = $c;
         return $this;
@@ -99,6 +101,8 @@ class Cmyk extends AbstractColor implements \ArrayAccess
         $m = (float)$m;
         if (($m < 0) || ($m > 100)) {
             throw new OutOfRangeException('Error: The value must be between 0 and 100');
+        } else if ($m < 1) {
+            $m = (float)($m * 100);
         }
         $this->m = $m;
         return $this;
@@ -116,6 +120,8 @@ class Cmyk extends AbstractColor implements \ArrayAccess
         $y = (float)$y;
         if (((int)$y < 0) || ((int)$y > 100)) {
             throw new OutOfRangeException('Error: The value must be between 0 and 100');
+        } else if ($y < 1) {
+            $y = (float)($y * 100);
         }
         $this->y = $y;
         return $this;
@@ -132,6 +138,8 @@ class Cmyk extends AbstractColor implements \ArrayAccess
     {
         if (((int)$k < 0) || ((int)$k > 100)) {
             throw new OutOfRangeException('Error: The value must be between 0 and 100');
+        } else if ($k < 1) {
+            $k = (float)($k * 100);
         }
         $this->k = $k;
         return $this;
@@ -205,11 +213,11 @@ class Cmyk extends AbstractColor implements \ArrayAccess
     /**
      * Convert to Gray
      *
-     * @return Gray
+     * @return Grayscale
      */
-    public function toGray(): Gray
+    public function toGray(): Grayscale
     {
-        return new Gray($this->k);
+        return new Grayscale($this->k);
     }
 
     /**

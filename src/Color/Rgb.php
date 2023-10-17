@@ -243,11 +243,11 @@ class Rgb extends AbstractColor implements \ArrayAccess
     /**
      * Convert to Gray
      *
-     * @return Gray
+     * @return Grayscale
      */
-    public function toGray(): Gray
+    public function toGray(): Grayscale
     {
-        return new Gray(floor(((floor(($this->r + $this->g + $this->b) / 3) / 255) * 100)));
+        return new Grayscale(floor(((floor(($this->r + $this->g + $this->b) / 3) / 255) * 100)));
     }
 
     /**

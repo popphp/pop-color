@@ -28,6 +28,21 @@ class CmykTest extends TestCase
         $this->assertEquals(4, count($cmyk->toArray(false)));
     }
 
+    public function testCmykPercent()
+    {
+        $cmyk = new Color\Cmyk(0.65, 0.25, 0.35, 0.10);
+        $this->assertEquals(65.0, $cmyk['c']);
+        $this->assertEquals(25.0, $cmyk['m']);
+        $this->assertEquals(35.0, $cmyk['y']);
+        $this->assertEquals(10.0, $cmyk['k']);
+        $this->assertEquals(65.0, $cmyk->c);
+        $this->assertEquals(25.0, $cmyk->m);
+        $this->assertEquals(35.0, $cmyk->y);
+        $this->assertEquals(10.0, $cmyk->k);
+        $this->assertEquals('0.65 0.25 0.35 0.1', (string)$cmyk);
+        $this->assertEquals(4, count($cmyk->toArray(false)));
+    }
+
     public function testCmykSetException()
     {
         $this->expectException('Pop\Color\Color\Exception');

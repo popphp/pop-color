@@ -23,9 +23,9 @@ use OutOfRangeException;
  * @author     Nick Sagona, III <dev@nolainteractive.com>
  * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.4.0
+ * @version    1.0.0
  */
-class Gray extends AbstractColor implements \ArrayAccess
+class Grayscale extends AbstractColor implements \ArrayAccess
 {
 
     /**
@@ -51,13 +51,15 @@ class Gray extends AbstractColor implements \ArrayAccess
      *
      * @param  mixed $gray
      * @throws OutOfRangeException
-     * @return Gray
+     * @return Grayscale
      */
-    public function setGray(mixed $gray): Gray
+    public function setGray(mixed $gray): Grayscale
     {
         $gray = (float)$gray;
-        if (($gray < 0) || ($gray > 100)) {
+        if (((int)$gray < 0) || ((int)$gray > 100)) {
             throw new OutOfRangeException('Error: The value must be between 0 and 100');
+        } else if ($gray < 1) {
+            $gray = (float)($gray * 100);
         }
         $this->gray = $gray;
         return $this;

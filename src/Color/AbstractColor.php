@@ -14,7 +14,7 @@
 namespace Pop\Color\Color;
 
 /**
- * Image color interface
+ * Abstract image color class
  *
  * @category   Pop
  * @package    Pop\Image
@@ -23,8 +23,15 @@ namespace Pop\Color\Color;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.4.0
  */
-interface ColorInterface
+abstract class AbstractColor implements ColorInterface
 {
+
+    /**
+     * String formats
+     */
+    const COMMA   = 'COMMA';
+    const CSS     = 'CSS';
+    const PERCENT = 'PERCENT';
 
     /**
      * Convert to readable string
@@ -32,13 +39,13 @@ interface ColorInterface
      * @param  ?string $format
      * @return string
      */
-    public function render(?string $format = null): string;
+    abstract public function render(?string $format = null): string;
 
     /**
      * Method to print the color object
      *
      * @return string
      */
-    public function __toString();
+    abstract public function __toString();
 
 }

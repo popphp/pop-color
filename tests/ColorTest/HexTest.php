@@ -116,4 +116,10 @@ class HexTest extends TestCase
         $this->assertEquals('rgb(255, 255, 255)', (string)$rgb);
     }
 
+    public function testHexRender()
+    {
+        $hex = new Color\Hex('#fff');
+        $this->assertEquals('255, 255, 255', $hex->render(Color\Hex::COMMA));
+    }
+
 }

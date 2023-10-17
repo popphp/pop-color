@@ -25,7 +25,7 @@ use OutOfRangeException;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    1.0.0
  */
-class Hex implements \ArrayAccess, ColorInterface
+class Hex extends AbstractColor implements \ArrayAccess
 {
 
     /**
@@ -272,13 +272,19 @@ class Hex implements \ArrayAccess, ColorInterface
     }
 
     /**
-     * Convert to CSS-formatted string
+     * Convert to readable string
      *
+     * @param  ?string $format
      * @return string
      */
-    public function render(): string
+    public function render(?string $format = null): string
     {
-        return '#' . $this->hex;
+        if (($format == self::COMMA) || ($format == self::PERCENT)) {
+            $rgb = $this->toRgb();
+            return $rgb->render($format);
+        } else {
+            return '#' . $this->hex;
+        }
     }
 
     /**
@@ -288,7 +294,7 @@ class Hex implements \ArrayAccess, ColorInterface
      */
     public function __toString(): string
     {
-        return $this->render();
+        return $this->render(self::CSS);
     }
 
     /**

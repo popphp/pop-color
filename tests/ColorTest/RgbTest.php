@@ -111,4 +111,62 @@ class RgbTest extends TestCase
         $this->assertEquals('3c', $hex->b);
     }
 
+    public function testRgbToGray()
+    {
+        $rgb = new Color\Rgb(240, 180, 60, 0.5);
+        $this->assertEquals(62.0, $rgb->toGray()->getGray());
+    }
+
+    public function testRgbToCmyk1()
+    {
+        $rgb = new Color\Rgb(240, 180, 60, 0.5);
+        $cmyk = $rgb->toCmyk();
+        $this->assertEquals(0.0, $cmyk->getC());
+        $this->assertEquals(25.0, $cmyk->getM());
+        $this->assertEquals(75.0, $cmyk->getY());
+        $this->assertEquals(6.0, $cmyk->getK());
+    }
+
+    public function testRgbToCmyk2()
+    {
+        $rgb = new Color\Rgb(180, 240, 60, 0.5);
+        $cmyk = $rgb->toCmyk();
+        $this->assertEquals(25.0, $cmyk->getC());
+        $this->assertEquals(0.0, $cmyk->getM());
+        $this->assertEquals(75.0, $cmyk->getY());
+        $this->assertEquals(6.0, $cmyk->getK());
+    }
+
+    public function testRgbToCmyk3()
+    {
+        $rgb = new Color\Rgb(180, 60, 240, 0.5);
+        $cmyk = $rgb->toCmyk();
+        $this->assertEquals(25.0, $cmyk->getC());
+        $this->assertEquals(75.0, $cmyk->getM());
+        $this->assertEquals(0.0, $cmyk->getY());
+        $this->assertEquals(6.0, $cmyk->getK());
+    }
+
+    public function testRgbToCmyk4()
+    {
+        $rgb = new Color\Rgb(0, 0, 0, 0.5);
+        $cmyk = $rgb->toCmyk();
+        $this->assertEquals(0.0, $cmyk->getC());
+        $this->assertEquals(0.0, $cmyk->getM());
+        $this->assertEquals(0.0, $cmyk->getY());
+        $this->assertEquals(100.0, $cmyk->getK());
+    }
+
+    public function testRgbRender1()
+    {
+        $rgb = new Color\Rgb(0, 0, 0);
+        $this->assertEquals('0 0 0', $rgb->render(Color\Rgb::PERCENT));
+    }
+
+    public function testRgbRender2()
+    {
+        $rgb = new Color\Rgb(0, 0, 0);
+        $this->assertEquals('0 0 0', $rgb->render());
+    }
+
 }

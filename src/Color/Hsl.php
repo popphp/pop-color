@@ -25,7 +25,7 @@ use OutOfRangeException;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    1.0.0
  */
-class Hsl implements \ArrayAccess, ColorInterface
+class Hsl extends AbstractColor implements \ArrayAccess
 {
 
     /**
@@ -67,7 +67,7 @@ class Hsl implements \ArrayAccess, ColorInterface
         $this->setH($h);
         $this->setS($s);
         $this->setL($l);
-        if (null !== $a) {
+        if ($a !== null) {
             $this->setA($a);
         }
     }
@@ -187,7 +187,7 @@ class Hsl implements \ArrayAccess, ColorInterface
      */
     public function hasA(): bool
     {
-        return (null !== $this->a);
+        return ($this->a !== null);
     }
 
     /**
@@ -197,7 +197,7 @@ class Hsl implements \ArrayAccess, ColorInterface
      */
     public function hasAlpha(): bool
     {
-        return (null !== $this->a);
+        return ($this->a !== null);
     }
 
     /**
@@ -290,14 +290,14 @@ class Hsl implements \ArrayAccess, ColorInterface
             $hsl['h'] = $this->h;
             $hsl['s'] = $this->s . '%';
             $hsl['l'] = $this->l . '%';
-            if (null !== $this->a) {
+            if ($this->a !== null) {
                 $hsl['a'] = $this->a;
             }
         } else {
             $hsl[] = $this->h;
             $hsl[] = $this->s . '%';
             $hsl[] = $this->l . '%';
-            if (null !== $this->a) {
+            if ($this->a !== null) {
                 $hsl[] = $this->a;
             }
         }
@@ -306,13 +306,23 @@ class Hsl implements \ArrayAccess, ColorInterface
     }
 
     /**
-     * Convert to CSS-formatted string
+     * Convert to readable string
      *
+     * @param  ?string $format
      * @return string
      */
-    public function render(): string
+    public function render(?string $format = null): string
     {
-        return ((null !== $this->a) ? 'hsla(' : 'hsl(') . implode(', ', $this->toArray()) . ')';
+        if ($format == self::COMMA) {
+            return $this->h . ', ' . $this->s . ', ' . $this->l . (!empty($this->a) ? ', ' . $this->a : '');
+        } else if ($format == self::CSS) {
+            return (($this->a !== null) ? 'hsla(' : 'hsl(') . implode(', ', $this->toArray()) . ')';
+        } else if ($format == self::PERCENT) {
+            $rgb = $this->toRgb();
+            return $rgb->render($format);
+        } else {
+            return $this->h . ' ' . $this->s . ' ' . $this->l . (!empty($this->a) ? ' ' . $this->a : '');
+        }
     }
 
     /**
@@ -322,7 +332,7 @@ class Hsl implements \ArrayAccess, ColorInterface
      */
     public function __toString(): string
     {
-        return $this->render();
+        return $this->render(self::CSS);
     }
 
     /**

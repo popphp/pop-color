@@ -216,4 +216,22 @@ class HslTest extends TestCase
         $this->assertEquals('3c', $hex->b);
     }
 
+    public function testHslRender1()
+    {
+        $hsl = new Color\Hsl(40, 75, 94, 0.5);
+        $this->assertEquals('40, 75, 94, 0.5', $hsl->render(Color\Hsl::COMMA));
+    }
+
+    public function testHslRender2()
+    {
+        $hsl = new Color\Hsl(40, 75, 94, 0.5);
+        $this->assertEquals('0.94 0.71 0.24', $hsl->render(Color\Hsl::PERCENT));
+    }
+
+    public function testHslRender3()
+    {
+        $hsl = new Color\Hsl(40, 75, 94, 0.5);
+        $this->assertEquals('40 75 94 0.5', $hsl->render());
+    }
+
 }

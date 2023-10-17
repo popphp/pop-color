@@ -25,7 +25,7 @@ use OutOfRangeException;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    1.0.0
  */
-class Rgb implements \ArrayAccess, ColorInterface
+class Rgb extends AbstractColor implements \ArrayAccess
 {
 
     /**
@@ -67,7 +67,7 @@ class Rgb implements \ArrayAccess, ColorInterface
         $this->setR($r);
         $this->setG($g);
         $this->setB($b);
-        if (null !== $a) {
+        if ($a !== null) {
             $this->setA($a);
         }
     }
@@ -187,7 +187,7 @@ class Rgb implements \ArrayAccess, ColorInterface
      */
     public function hasA(): bool
     {
-        return (null !== $this->a);
+        return ($this->a !== null);
     }
 
     /**
@@ -197,7 +197,57 @@ class Rgb implements \ArrayAccess, ColorInterface
      */
     public function hasAlpha(): bool
     {
-        return (null !== $this->a);
+        return ($this->a !== null);
+    }
+
+    /**
+     * Convert to CMYK
+     *
+     * @return Cmyk
+     */
+    public function toCmyk(): Cmyk
+    {
+        $K = 1;
+
+        // Calculate CMY.
+        $cyan    = 1 - ($this->r / 255);
+        $magenta = 1 - ($this->g / 255);
+        $yellow  = 1 - ($this->b / 255);
+
+        // Calculate K.
+        if ($cyan < $K) {
+            $K = $cyan;
+        }
+        if ($magenta < $K) {
+            $K = $magenta;
+        }
+        if ($yellow < $K) {
+            $K = $yellow;
+        }
+
+        if ($K == 1) {
+            $cyan    = 0;
+            $magenta = 0;
+            $yellow  = 0;
+        } else {
+            $cyan    = round((($cyan - $K) / (1 - $K)) * 100);
+            $magenta = round((($magenta - $K) / (1 - $K)) * 100);
+            $yellow  = round((($yellow - $K) / (1 - $K)) * 100);
+        }
+
+        $black = round($K * 100);
+
+        return new Cmyk($cyan, $magenta, $yellow, $black);
+    }
+
+    /**
+     * Convert to Gray
+     *
+     * @return Gray
+     */
+    public function toGray(): Gray
+    {
+        return new Gray(floor(((floor(($this->r + $this->g + $this->b) / 3) / 255) * 100)));
     }
 
     /**
@@ -263,14 +313,14 @@ class Rgb implements \ArrayAccess, ColorInterface
             $rgb['r'] = $this->r;
             $rgb['g'] = $this->g;
             $rgb['b'] = $this->b;
-            if (null !== $this->a) {
+            if ($this->a !== null) {
                 $rgb['a'] = $this->a;
             }
         } else {
             $rgb[] = $this->r;
             $rgb[] = $this->g;
             $rgb[] = $this->b;
-            if (null !== $this->a) {
+            if ($this->a !== null) {
                 $rgb[] = $this->a;
             }
         }
@@ -279,13 +329,22 @@ class Rgb implements \ArrayAccess, ColorInterface
     }
 
     /**
-     * Convert to CSS-formatted string
+     * Convert to readable string
      *
+     * @param  ?string $format
      * @return string
      */
-    public function render(): string
+    public function render(?string $format = null): string
     {
-        return ((null !== $this->a) ? 'rgba(' : 'rgb(') . implode(', ', $this->toArray()) . ')';
+        if ($format == self::COMMA) {
+            return $this->r . ', ' . $this->g . ', ' . $this->b . (!empty($this->a) ? ', ' . $this->a : '');
+        } else if ($format == self::CSS) {
+            return (($this->a !== null) ? 'rgba(' : 'rgb(') . implode(', ', $this->toArray()) . ')';
+        } else if ($format == self::PERCENT) {
+            return round(($this->r / 255), 2) . ' ' . round(($this->g / 255), 2) . ' ' . round(($this->b / 255), 2);
+        } else {
+            return $this->r . ' ' . $this->g . ' ' . $this->b . (!empty($this->a) ? ' ' . $this->a : '');
+        }
     }
 
     /**
@@ -295,7 +354,7 @@ class Rgb implements \ArrayAccess, ColorInterface
      */
     public function __toString(): string
     {
-        return $this->render();
+        return $this->render(self::CSS);
     }
 
     /**

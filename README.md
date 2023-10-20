@@ -16,6 +16,20 @@ Supported color formats include:
 - CMYK
 - Grayscale
 
+NSTALL
+-------
+
+Install `pop-color` using Composer.
+
+    composer require popphp/pop-color
+
+Or, require it in your composer.json file
+
+    "require": {
+        "popphp/pop-color" : "^1.0.0"
+    }
+
+
 BASIC USAGE
 -----------
 

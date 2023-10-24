@@ -16,7 +16,7 @@ Supported color formats include:
 - CMYK
 - Grayscale
 
-NSTALL
+INSTALL
 -------
 
 Install `pop-color` using Composer.

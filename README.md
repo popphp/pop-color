@@ -78,8 +78,9 @@ hsl(20, 75%, 47%)
 ```
 
 ```php
+// Will print a string of space-separated percentages, common to a PDF color format
 $cmyk = $rgb->toCmyk();
-echo $cmyk . PHP_EOL; // Will print a string of space-separated percentages, common to a PDF color format
+echo $cmyk . PHP_EOL; 
 ```
 
 ```text

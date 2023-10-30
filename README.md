@@ -1,11 +1,17 @@
 pop-color
 =========
-Pop Color Component
 
 [![Build Status](https://github.com/popphp/pop-color/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-color/actions)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-color)](http://cc.popphp.org/pop-color/)
 
-OVERVIEW
+[![Join the chat at https://popphp.slack.com](https://media.popphp.org/img/slack.svg)](https://popphp.slack.com)
+[![Join the chat at https://discord.gg/D9JBxPa5](https://media.popphp.org/img/discord.svg)](https://discord.gg/D9JBxPa5)
+
+* [Overview](#overview)
+* [Install](#install)
+* [Quickstart](#quickstart)
+
+Overview
 --------
 Pop Color is a helpful component to manage different types of color values and conversions.
 Supported color formats include:
@@ -16,7 +22,9 @@ Supported color formats include:
 - CMYK
 - Grayscale
 
-INSTALL
+Within the Pop PHP Framework, the `pop-css`, `pop-image` and `pop-pdf` components use this component. 
+
+Install
 -------
 
 Install `pop-color` using Composer.
@@ -29,11 +37,10 @@ Or, require it in your composer.json file
         "popphp/pop-color" : "^1.0.0"
     }
 
+Quickstart
+----------
 
-BASIC USAGE
------------
-
-**Create a Color Object**
+### Create a color object
 
 ```php
 $rgb = Color::rgb(120, 60, 30, 0.5);
@@ -46,7 +53,7 @@ The above command will print the default CSS format:
 rgba(120, 60, 30, 0.5)
 ```
 
-Convert to another color format:
+### Convert to another color format
 
 ```php
 $hex = $rgb->toHex();
@@ -75,7 +82,7 @@ echo $cmyk . PHP_EOL; // Will print a string of space-separated percentages, com
 0 0.5 0.75 0.53
 ```
 
-**Accessing Color Properties**
+### Accessing Color Properties
 
 ```php
 $rgb = Color::rgb(120, 60, 30, 0.5);
@@ -107,7 +114,7 @@ echo $cmyk->getK() . PHP_EOL;
 50
 ```
 
-**Parse Color Strings**
+### Parse Color Strings
 
 ```php
 $rgb = Color::parse('rgba(120, 60, 30, 0.5)');

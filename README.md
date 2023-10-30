@@ -24,6 +24,8 @@ Supported color formats include:
 
 Within the Pop PHP Framework, the `pop-css`, `pop-image` and `pop-pdf` components use this component. 
 
+[Top](#pop-color)
+
 Install
 -------
 
@@ -36,6 +38,8 @@ Or, require it in your composer.json file
     "require": {
         "popphp/pop-color" : "^1.0.0"
     }
+
+[Top](#pop-color)
 
 Quickstart
 ----------
@@ -132,4 +136,5 @@ echo $rgb . PHP_EOL;
 0.5
 rgba(120, 60, 30, 0.5)
 ```
- 
+
+[Top](#pop-color)

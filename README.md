@@ -35,7 +35,7 @@ Install `pop-color` using Composer.
 Or, require it in your composer.json file
 
     "require": {
-        "popphp/pop-color" : "^1.0.1"
+        "popphp/pop-color" : "^1.0.2"
     }
 
 [Top](#pop-color)

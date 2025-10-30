@@ -23,7 +23,7 @@ use OutOfRangeException;
  * @author     Nick Sagona, III <dev@noladev.com>
  * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC.
  * @license    https://www.popphp.org/license     New BSD License
- * @version    1.0.2
+ * @version    1.0.3
  */
 class Cmyk extends AbstractColor implements \ArrayAccess
 {

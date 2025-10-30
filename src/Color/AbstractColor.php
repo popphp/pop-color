@@ -21,7 +21,7 @@ namespace Pop\Color\Color;
  * @author     Nick Sagona, III <dev@noladev.com>
  * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC.
  * @license    https://www.popphp.org/license     New BSD License
- * @version    1.0.2
+ * @version    1.0.3
  */
 abstract class AbstractColor implements ColorInterface
 {
